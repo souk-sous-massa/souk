@@ -10,9 +10,44 @@ st.write("منتجات بلدية، طبيعية 100% من عند ناس سوس 
 st.write(" مرحبا بيكوم قلبو واختارو لي بغيتو")
 st.title("🛍 سوق سوس ماسة ")
 st.write("مرحبا بيكوم فالسوق ديالنا ")
+#NUMERO_ORANGE = "0631943706"
+#CODE_ADMIN = "fati246"
+try:
+NUMERO_ORANGE = st.secrets["0631943706"]
+CODE_ADMIN = st.secrets["fati246"]
+except:
+NUMERO_ORANGE = "0631943706"
+CODE_ADMIN = "fati246"
+if "produits" not in st.session_state: 
+st.session_state.produits = [ ] 
+if "en_attente" not in st.session_state:
+st.session_state.en attente = [ ]
+params = st.query_params
+is_admin = params.get("admin") == "1"
+if is_admin:
+st.title("لوحة الإدارة🔒")
+mot = st.text_input("دخلي الكود السري" ، type= " password ")
+if mot == CODE_ADMIN:
+st.success("مرحبا مولات السوق ")
+st.write(f"عندك طلبات في الإنتظار {len(st.session_state.en_attente)}
+for i , p in enumerate(st.session_state.en_attente):
+st.image(p["image"] , width=250 , caption =" تصويرة المنتوج ")
+st.image(p[" pruve "] , width=250 , caption = "تصويرة الخلاص 40 درهم ")
+st.write(f"البائع : {p[ ' vendeur ' ] } - {p[ ' tel ' ] }  -  {p[' ville ' ] } ")
+st.write(f"المنتوج : p[ ' produits ' ] }  -  {p[' prix ' ] } درهم ")
+st.write (p[ 'desc' ]
 st.header("المنتجات")
 col1, col2 = st.columns(2)
 with col1:
+if st.button(f"نوافق و ننشر - p[ ' produits ' ] }" , key=f"ok{ i }"):
+st.session_state.produits.append( p )
+st.session_state.en_attente.pop( i )
+st.rerun( )
+st.write("---")
+elif mot != "" :
+st.error("الكود غالط")
+st.stop( )
+
   st.subheader("زيت اركان")
   st.write("الثمن: 150درهم ")
   if st.button("شراء زيت اركان"):
