@@ -8,14 +8,14 @@ with col1:
   st.subheader("زيت اركان")
   st.write("الثمن: 150درهم ")
  if st.button("شراء زيت اركان")
-st.success("رقم البائع 0612345678")
-st.write("تواصلو معه عبر الواتساب للشراء")
+    st.success("رقم البائع 0612345678")
+    st.write("تواصلو معه عبر الواتساب للشراء")
   with col2:
     st.subheader("العسل الحر")
     st.write("الثمن:200 درهم")
    if st.button("شراء العسل")
-st.success("رقم البائع  0612345678")
-st.write("
+      st.success("رقم البائع  0612345678")
+      st.write("تواصلو معه عبر الواتساب")
     st.write("---")
     st.markdown("---")
     st.subheader("تريد عرض سلعتك هنا ")
