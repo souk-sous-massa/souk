@@ -1,7 +1,5 @@
 import streamlit as st
-st.set_page_config(page_title="سوق سوس ماسة" , page_icon="🛍")
-st.markdown(">h1 style='text-align: center; color: #E67E22;> 
-🌿>مرحبا بيكوم فسوق سوس ماسة<🌿><h1>🌿, unsafe_allow_html=true)
+st.set_page_config(page_title="سوق سوس ماسة" , page_icon="🛍") 
 St.write("منتجات بلدية، طبيعية 100% من عند ناس سوس 🌿")
 st.write(" مرحبا بيكوم قلبو واختارو لي بغيتو")
 st.title("🛍 سوق سوس ماسة ")
