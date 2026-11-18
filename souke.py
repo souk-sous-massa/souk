@@ -1,5 +1,4 @@
 import streamlit as st
-st.markdown(" " "
 <style>
 header  {visibility: hidden; }
 footer   {visibility: hidden; }
