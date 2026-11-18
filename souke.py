@@ -7,11 +7,15 @@ col1, col2 = st.columns(2)
 with col1:
   st.subheader("زيت اركان")
   st.write("الثمن: 150درهم ")
-  st.button("شراء زيت اركان")
+ if st.button("شراء زيت اركان")
+st.success("رقم البائع 0612345678")
+st.write("تواصلو معه عبر الواتساب للشراء")
   with col2:
     st.subheader("العسل الحر")
     st.write("الثمن:200 درهم")
-    st.button("شراء العسل")
+   if st.button("شراء العسل")
+st.success("رقم البائع  0612345678")
+st.write("
     st.write("---")
     st.markdown("---")
     st.subheader("تريد عرض سلعتك هنا ")
