@@ -1,4 +1,10 @@
 import streamlit as st
+st.markdown("""
+<style>
+header  {visibility: hidden; }
+footer   {visibility: hidden;  }
+</style>
+" " " , unsafe_allow_html=true)
 st.set_page_config(page_title="سوق سوس ماسة" , page_icon="🛍") 
 st.write("منتجات بلدية، طبيعية 100% من عند ناس سوس 🌿")
 st.write(" مرحبا بيكوم قلبو واختارو لي بغيتو")
