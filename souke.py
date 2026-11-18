@@ -2,8 +2,8 @@ import streamlit as st
 st.set_page_config(page_title="سوق سوس ماسة" , page_icon="🛍")
 st.markdown(">h1 style='text-align: center; color: #E67E22;> 
 🌿>مرحبا بيكوم فسوق سوس ماسة<🌿><h1>🌿, unsafe_allow_html=true)
-St.markdown("<p style='text-align:centre; font-size: 20px; '>منتجات بلدية، طبيعية 100% من عند ناس سوس 🌿<p>" , unsafe_allow_html=true)
-st.markdown("---")
+St.write("منتجات بلدية، طبيعية 100% من عند ناس سوس 🌿")
+st.write(" مرحبا بيكوم قلبو واختارو لي بغيتو")
 st.title("🛍 سوق سوس ماسة ")
 st.write("مرحبا بيكوم فالسوق ديالنا ")
 st.header("المنتجات")
@@ -20,7 +20,8 @@ with col2:
     if st.button("شراء العسل"):
       st.success("رقم البائع  0612345678")
       st.write("تواصلو معه عبر الواتساب")
-      st.markdown("<p style= 'text-align:centre;'>💛شكرا ليكوم ومرحبا بيكوم فأي وقت 💛</p>", unsafe_allow_html=true)
+      st.divider()
+      st.write("💛شكرا ليكوم ومرحبا بيكوم فأي وقت 💛")
     st.write("---")
     st.markdown("---")
     st.subheader("تريد عرض سلعتك هنا ")
