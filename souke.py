@@ -10,7 +10,7 @@ with col1:
 if st.button("شراء زيت اركان"):
     st.success("رقم البائع 0612345678")
     st.write("تواصلو معه عبر الواتساب للشراء")
-  with col2:
+with col2:
     st.subheader("العسل الحر")
     st.write("الثمن:200 درهم")
   if st.button("شراء العسل"):
