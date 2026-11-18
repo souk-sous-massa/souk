@@ -1,8 +1,8 @@
 import streamlit as st
-st.markdown(""")
+st.markdown(" " "
 <style>
 header  {visibility: hidden; }
-footer   {visibility: hidden;  }
+footer   {visibility: hidden; }
 </style>
 " " " , unsafe_allow_html=true)
 st.set_page_config(page_title="سوق سوس ماسة" , page_icon="🛍") 
