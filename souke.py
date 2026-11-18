@@ -1,6 +1,6 @@
 import streamlit as st
 st.set_page_config(page_title="سوق سوس ماسة" , page_icon="🛍") 
-St.write("منتجات بلدية، طبيعية 100% من عند ناس سوس 🌿")
+st.write("منتجات بلدية، طبيعية 100% من عند ناس سوس 🌿")
 st.write(" مرحبا بيكوم قلبو واختارو لي بغيتو")
 st.title("🛍 سوق سوس ماسة ")
 st.write("مرحبا بيكوم فالسوق ديالنا ")
