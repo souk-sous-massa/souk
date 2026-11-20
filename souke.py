@@ -2,7 +2,7 @@ import streamlit as st
 st.set_page_config(page_title="سوق سوس ماسة", page_icon="🛍️")
 st.title("🛍️ سوق سوس ماسة")
 try:
-    NUMERO_ORANGE = st.secrets["NUMERO_Orange"]
+    NUMERO_ORANGE = st.secrets["NUMERO_ORANGE"]
     CODE_ADMIN = st.secrets["CODE_ADMIN"]
 except:
     NUMERO_ORANGE = "0631943706"
@@ -20,9 +20,9 @@ if is_admin:
         st.success("مرحبا مولات السوق!")
         st.write(f"عندك {len(st.session_state.en_attente)} طلبات في الانتظار")
         for i, p in enumerate(st.session_state.en_attente):
-            st.image(p["image"], width=250, caption="تصويرة المنتوج")
-            st.image(p["preuve"], width=250, caption="تصويرة الخلاص 40 درهم")
-            st.write(f"البائع: {p['vendeur']} - {p['tel']} - {p['ville']}")
+            st.image(p["image"], width=250, caption="صورة المنتوج")
+            st.image(p["preuve"], width=250, caption="ايصال الدفع - المبلغ الاجمالي = 40درهم")
+            st.write(f"اسم البائع: {p['vendeur']} -الهاتف: {p['tel']} -المدينة: {p['ville']}")
             st.write(f"المنتوج: {p['produit']} - {p['prix']} درهم")
             st.write(p['desc'])
             col1, col2 = st.columns(2)
@@ -39,10 +39,10 @@ if is_admin:
     elif mot != "":
         st.error("الكود غالط!")
     st.stop()
-choix = st.sidebar.radio("القائمة", ["🛍️ السوق", "📦 بيع سلعتك - 40 درهم"])
+choix = st.sidebar.ra(["القائمة الرئيسية", ["🛍️ السوق", "📦"اعرض منتجاتك- 40 درهم")
 if choix == "🛍️ السوق":
-    st.success("سوق سوس ماسة - البائع كيربح 100%")
-    st.write("عرض البداية: 40 درهم للشهر باش تنشر منتوجك")
+    st.success("سوق سوس ماسة - يحصل البائع على 100% من الارباح")
+    st.write("عرض البداية: 40 درهم للشهر لنشر منتجاتك")
     if len(st.session_state.produits) == 0:
         st.write("لا توجد منتجات بعد. كن أول من ينشر!")
     else:
@@ -54,23 +54,23 @@ if choix == "🛍️ السوق":
             st.write(p['desc'])
             st.write("---")
 else:
-    st.title("بيع سلعتك - 40 درهم للشهر")
-    st.info(f"1. صيفط 40 درهم لـ Orange Money: {NUMERO_ORANGE} - 2. عمر الاستمارة و حط التصويرة ديال السلعة + تصويرة التحويل - 3. ملي نتأكدو من الخلاص، غادي ننشرو ليك سلعتك")
-    nom = st.text_input("سميتك")
-    tel = st.text_input("نمرة التيليفون ديالك")
-    ville = st.text_input("مدينتك")
-    produit = st.text_input("سميت المنتوج")
-    prix = st.number_input("الثمن بالدرهم", value=100)
+    st.title("اعرض منتجاتك - 40 درهم للشهر")
+    st.info(f"1. ارسل 40درهم عبر  Orange Moneyالى : {NUMERO_ORANGE} 2. بعد التاكد من الدفع سيتم نشر منتجك")
+    nom = st.text_input("الاسم الكامل")
+    tel = st.text_input("رقم الهاتف")
+    ville = st.text_input("المدينة")
+    produit = st.text_input("اسم المنتج")
+    prix = st.number_input("السعر بالدرهم", value=100)
     desc = st.text_area("وصف المنتوج")
-    photo = st.file_uploader("تصويرة المنتوج", type=["jpg","png","jpeg"])
-    preuve = st.file_uploader("تصويرة التحويل ديال 40 درهم - Orange Money", type=["jpg","png","jpeg"])
+    photo = st.file_uploader("صورة المنتوج", type=["jpg","png","jpeg"])
+    preuve = st.file_uploader("صورة ايصال التحويل 40درهم عبر  - Orange Money", type=["jpg","png","jpeg"])
     if photo:
         st.image(photo, width=200)
     if preuve:
         st.image(preuve, width=200)
-    if st.button("صيفط الطلب"):
+    if st.button("ارسال الطلب"):
         if nom and tel and produit and photo and preuve:
             st.session_state.en_attente.append({"vendeur": nom, "tel": tel, "ville": ville, "produit": produit, "prix": prix, "desc": desc, "image": photo, "preuve": preuve})
-            st.success("تم! الطلب ديالك وصل. ملي نتأكدو من 40 درهم غادي ننشروه!")
+            st.success("تم استلام طلبك بنجاح سيتم نشر منتجك بعد التاكد من دفع مبلغ 40 درهم")
         else:
-            st.error("عافاك عمر كلشي و حط التصاور بجوج!")
+            st.error("يرجى ملء جميع الحقول!")
