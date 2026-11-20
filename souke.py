@@ -128,7 +128,7 @@ else:
                 try:
                     res = supabase.table("demandes").insert({
                         "vendeur": nom, "tel": tel, "ville": ville,
-                        "produit": produit, "prix": prix, "desc": desc,
+                        "produit": produit, "prix": prix, "description": desc,
                         "statut": "en_attente"
                     }).execute()
                     if res.data: new_id = res.data[0].get("id")
