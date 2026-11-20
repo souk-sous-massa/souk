@@ -77,7 +77,7 @@ with col1:
 
 with col2:
     if st.button(f"❌ نرفض - {p.get('nom', '')}", key=f"no_{p.get('id')}"):
-            supabase.table("demandes").delete().eq("id", p.get("id")).execute()
+            supabase.table("demandes").update({"statut": "refuse"}).eq("id", p.get("id")).execute()
             st.warning("تم الرفض و المسح!")
             st.rerun() 
             st.write("---")
