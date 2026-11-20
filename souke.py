@@ -67,7 +67,7 @@ if is_admin:
                 st.image(p["preuve"], width=250, caption="ايصال الدفع - المبلغ الاجمالي = 40درهم")
             st.write(f"اسم البائع: {p['vendeur']} -الهاتف: {p['tel']} -المدينة: {p['ville']}")
             st.write(f"المنتوج: {p['produit']} - {p['prix']} درهم")
-            st.write(p['desc'])
+            st.write(p.get['description', ''])
             col1, col2 = st.columns(2)
             with col1:
                 if st.button(f"✅ نوافق و ننشر - {p['produit']}", key=f"ok{i}"):
