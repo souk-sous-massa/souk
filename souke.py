@@ -80,9 +80,9 @@ with col2:
         supabase.table("demandes").delete().eq("id", p.get("id")).execute()
         st.warning("تم الرفض و المسح!")
         st.rerun() 
-            st.write("---")
+        st.write("---")
     elif mot != "":
-        st.error("الكود غالط!")
+    st.error("الكود غالط!")
     st.stop()
 
 option1 = "اعرض منتجاتك -📦40 درهم"
