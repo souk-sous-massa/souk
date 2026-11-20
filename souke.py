@@ -1,6 +1,6 @@
 import streamlit as st
+import base64
 from supabase import create_client
-
 st.set_page_config(page_title="سوق سوس ماسة", page_icon="🛍️")
 st.title("🛍️ سوق سوس ماسة")
 
@@ -68,22 +68,18 @@ if is_admin:
             st.write(f"اسم البائع: {p['vendeur']} -الهاتف: {p['tel']} -المدينة: {p['ville']}")
             st.write(f"المنتوج: {p['produit']} - {p['prix']} درهم")
             st.write(p.get('description', ''))
-            col1, col2 = st.columns(2)
-            with col1:
-                if st.button(f"✅ نوافق و ننشر - {p['produit']}", key=f"ok{i}"):
-                    if supabase is not None and p.get("id_db"):
-                        try: supabase.table("demandes").update({"statut": "approuve"}).eq("id", p["id_db"]).execute()
-                        except: pass
-                    st.session_state.produits.append(p)
-                    st.session_state.en_attente.pop(i)
-                    st.rerun()
-            with col2:
-                if st.button(f"❌ نرفض - {p['produit']}", key=f"no{i}"):
-                    if supabase is not None and p.get("id_db"):
-                        try: supabase.table("demandes").update({"statut": "refuse"}).eq("id", p["id_db"]).execute()
-                        except: pass
-                    st.session_state.en_attente.pop(i)
-                    st.rerun()
+col1, col2 = st.columns(2)
+with col1:
+    if st.button(f"✅ نوافق و ننشر - {p.get('nom', '')}", key=f"ok_{p.get('id')}"):
+        supabase.table("demandes").update({"statut": "accepte"}).eq("id", p.get("id")).execute()
+        st.success("تم القبول!")
+        st.rerun()
+
+with col2:
+    if st.button(f"❌ نرفض - {p.get('nom', '')}", key=f"no_{p.get('id')}"):
+        supabase.table("demandes").delete().eq("id", p.get("id")).execute()
+        st.warning("تم الرفض و المسح!")
+        st.rerun() 
             st.write("---")
     elif mot != "":
         st.error("الكود غالط!")
