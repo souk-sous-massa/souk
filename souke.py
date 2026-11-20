@@ -37,7 +37,7 @@ if supabase is not None and len(st.session_state.en_attente) == 0 and len(st.ses
             st.session_state.en_attente.append({
                 "vendeur": r.get("vendeur",""), "tel": r.get("tel",""),
                 "ville": r.get("ville",""), "produit": r.get("produit",""),
-                "prix": r.get("prix",0), "desc": r.get("desc",""),
+                "prix": r.get("prix",0), "description": r.get("description",""),
                 "image": None, "preuve": None, "id_db": r.get("id")
             })
         res2 = supabase.table("demandes").select("*").eq("statut", "approuve").execute()
@@ -45,7 +45,7 @@ if supabase is not None and len(st.session_state.en_attente) == 0 and len(st.ses
             st.session_state.produits.append({
                 "vendeur": r.get("vendeur",""), "tel": r.get("tel",""),
                 "ville": r.get("ville",""), "produit": r.get("produit",""),
-                "prix": r.get("prix",0), "desc": r.get("desc",""),
+                "prix": r.get("prix",0), "description": r.get("description",""),
                 "image": None, "preuve": None, "id_db": r.get("id")
             })
     except Exception as e:
@@ -104,7 +104,7 @@ if choix == "🛍️ السوق":
                 st.image(p["image"], width=300)
             st.write(f"### {p['produit']} - {p['prix']} درهم")
             st.write(f"البائع: {p['vendeur']} | المدينة: {p['ville']} | 📱 {p['tel']}")
-            st.write(p['desc'])
+            st.write(p['description'])
             st.write("---")
 else:
     st.title("اعرض منتجاتك - 40 درهم للشهر")
@@ -128,13 +128,13 @@ else:
                 try:
                     res = supabase.table("demandes").insert({
                         "vendeur": nom, "tel": tel, "ville": ville,
-                        "produit": produit, "prix": prix, "description": desc,
+                        "produit": produit, "prix": prix, "description": description,
                         "statut": "en_attente"
                     }).execute()
                     if res.data: new_id = res.data[0].get("id")
                 except Exception as e:
                     st.warning(f"تسجل فالسيت ولكن ما تسجلش ف Supabase: {e}")
-            st.session_state.en_attente.append({"vendeur": nom, "tel": tel, "ville": ville, "produit": produit, "prix": prix, "description": desc, "image": photo, "preuve": preuve, "id_db": new_id})
+            st.session_state.en_attente.append({"vendeur": nom, "tel": tel, "ville": ville, "produit": produit, "prix": prix, "description": description, "image": photo, "preuve": preuve, "id_db": new_id})
             st.success("تم استلام طلبك بنجاح سيتم نشر منتجك بعد التاكد من دفع مبلغ 40 درهم")
         else:
             st.error("يرجى ملء جميع الحقول!")
