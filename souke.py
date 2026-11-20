@@ -39,7 +39,9 @@ if is_admin:
     elif mot != "":
         st.error("الكود غالط!")
     st.stop()
-choix = st.sidebar.ra(["القائمة الرئيسية", ["🛍️ السوق" ,"اعرض منتجاتك- 40 درهم")
+option1 = "اعرض منتجاتك -📦40 درهم"
+option2 = "🛍️ السوق"
+choix = st.sidebar.radio("القائمة الرئيسية", [option1, option2])
 if choix == "🛍️ السوق":
     st.success("سوق سوس ماسة - يحصل البائع على 100% من الارباح")
     st.write("عرض البداية: 40 درهم للشهر لنشر منتجاتك")
