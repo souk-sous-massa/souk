@@ -1,18 +1,59 @@
 import streamlit as st
+from supabase import create_client
+
 st.set_page_config(page_title="سوق سوس ماسة", page_icon="🛍️")
 st.title("🛍️ سوق سوس ماسة")
+
+# --- الربط مع Supabase ---
+try:
+    SUPABASE_URL = st.secrets["SUPABASE_URL"]
+    SUPABASE_KEY = st.secrets["SUPABASE_KEY"]
+except:
+    SUPABASE_URL = "https://dyuquatmafabwghlaafb.supabase.co"
+    SUPABASE_KEY = "sb_publishable_pUdIHoY7Uwsj3dYRtncaYA_4trTSdEw"
+
+try:
+    supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+except:
+    supabase = None
+
 try:
     NUMERO_ORANGE = st.secrets["NUMERO_ORANGE"]
     CODE_ADMIN = st.secrets["CODE_ADMIN"]
 except:
     NUMERO_ORANGE = "0631943706"
     CODE_ADMIN = "fati246"
+
 if "produits" not in st.session_state:
     st.session_state.produits = []
 if "en_attente" not in st.session_state:
     st.session_state.en_attente = []
+
+# جبد الطلبات و المنتجات من Supabase باش كلشي يبقى مسجل
+if supabase is not None and len(st.session_state.en_attente) == 0 and len(st.session_state.produits) == 0:
+    try:
+        res = supabase.table("demandes").select("*").eq("statut", "en_attente").execute()
+        for r in res.data:
+            st.session_state.en_attente.append({
+                "vendeur": r.get("vendeur",""), "tel": r.get("tel",""),
+                "ville": r.get("ville",""), "produit": r.get("produit",""),
+                "prix": r.get("prix",0), "desc": r.get("desc",""),
+                "image": None, "preuve": None, "id_db": r.get("id")
+            })
+        res2 = supabase.table("demandes").select("*").eq("statut", "approuve").execute()
+        for r in res2.data:
+            st.session_state.produits.append({
+                "vendeur": r.get("vendeur",""), "tel": r.get("tel",""),
+                "ville": r.get("ville",""), "produit": r.get("produit",""),
+                "prix": r.get("prix",0), "desc": r.get("desc",""),
+                "image": None, "preuve": None, "id_db": r.get("id")
+            })
+    except Exception as e:
+        pass
+
 params = st.query_params
 is_admin = params.get("admin") == "1"
+
 if is_admin:
     st.title("🔒 لوحة الإدارة")
     mot = st.text_input("دخلي الكود السري", type="password")
@@ -20,28 +61,38 @@ if is_admin:
         st.success("مرحبا مولات السوق!")
         st.write(f"عندك {len(st.session_state.en_attente)} طلبات في الانتظار")
         for i, p in enumerate(st.session_state.en_attente):
-            st.image(p["image"], width=250, caption="صورة المنتوج")
-            st.image(p["preuve"], width=250, caption="ايصال الدفع - المبلغ الاجمالي = 40درهم")
+            if p.get("image") is not None:
+                st.image(p["image"], width=250, caption="صورة المنتوج")
+            if p.get("preuve") is not None:
+                st.image(p["preuve"], width=250, caption="ايصال الدفع - المبلغ الاجمالي = 40درهم")
             st.write(f"اسم البائع: {p['vendeur']} -الهاتف: {p['tel']} -المدينة: {p['ville']}")
             st.write(f"المنتوج: {p['produit']} - {p['prix']} درهم")
             st.write(p['desc'])
             col1, col2 = st.columns(2)
             with col1:
                 if st.button(f"✅ نوافق و ننشر - {p['produit']}", key=f"ok{i}"):
+                    if supabase is not None and p.get("id_db"):
+                        try: supabase.table("demandes").update({"statut": "approuve"}).eq("id", p["id_db"]).execute()
+                        except: pass
                     st.session_state.produits.append(p)
                     st.session_state.en_attente.pop(i)
                     st.rerun()
             with col2:
                 if st.button(f"❌ نرفض - {p['produit']}", key=f"no{i}"):
+                    if supabase is not None and p.get("id_db"):
+                        try: supabase.table("demandes").update({"statut": "refuse"}).eq("id", p["id_db"]).execute()
+                        except: pass
                     st.session_state.en_attente.pop(i)
                     st.rerun()
             st.write("---")
     elif mot != "":
         st.error("الكود غالط!")
     st.stop()
+
 option1 = "اعرض منتجاتك -📦40 درهم"
 option2 = "🛍️ السوق"
 choix = st.sidebar.radio("القائمة الرئيسية", [option1, option2])
+
 if choix == "🛍️ السوق":
     st.success("سوق سوس ماسة - يحصل البائع على 100% من الارباح")
     st.write("عرض البداية: 40 درهم للشهر لنشر منتجاتك")
@@ -57,7 +108,7 @@ if choix == "🛍️ السوق":
             st.write("---")
 else:
     st.title("اعرض منتجاتك - 40 درهم للشهر")
-    st.info(f"1. ارسل 40درهم عبر  Orange Moneyالى : {NUMERO_ORANGE} 2. بعد التاكد من الدفع سيتم نشر منتجك")
+    st.info(f"1. ارسل 40درهم عبر  Orange Money الى : {NUMERO_ORANGE} 2. بعد التاكد من الدفع سيتم نشر منتجك")
     nom = st.text_input("الاسم الكامل")
     tel = st.text_input("رقم الهاتف")
     ville = st.text_input("المدينة")
@@ -72,7 +123,18 @@ else:
         st.image(preuve, width=200)
     if st.button("ارسال الطلب"):
         if nom and tel and produit and photo and preuve:
-            st.session_state.en_attente.append({"vendeur": nom, "tel": tel, "ville": ville, "produit": produit, "prix": prix, "desc": desc, "image": photo, "preuve": preuve})
+            new_id = None
+            if supabase is not None:
+                try:
+                    res = supabase.table("demandes").insert({
+                        "vendeur": nom, "tel": tel, "ville": ville,
+                        "produit": produit, "prix": prix, "desc": desc,
+                        "statut": "en_attente"
+                    }).execute()
+                    if res.data: new_id = res.data[0].get("id")
+                except Exception as e:
+                    st.warning(f"تسجل فالسيت ولكن ما تسجلش ف Supabase: {e}")
+            st.session_state.en_attente.append({"vendeur": nom, "tel": tel, "ville": ville, "produit": produit, "prix": prix, "desc": desc, "image": photo, "preuve": preuve, "id_db": new_id})
             st.success("تم استلام طلبك بنجاح سيتم نشر منتجك بعد التاكد من دفع مبلغ 40 درهم")
         else:
             st.error("يرجى ملء جميع الحقول!")
