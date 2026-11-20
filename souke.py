@@ -114,7 +114,7 @@ else:
     ville = st.text_input("المدينة")
     produit = st.text_input("اسم المنتج")
     prix = st.number_input("السعر بالدرهم", value=100)
-    desc = st.text_area("وصف المنتوج")
+    description = st.text_area("وصف المنتوج")
     photo = st.file_uploader("صورة المنتوج", type=["jpg","png","jpeg"])
     preuve = st.file_uploader("صورة ايصال التحويل 40درهم عبر  - Orange Money", type=["jpg","png","jpeg"])
     if photo:
@@ -134,7 +134,7 @@ else:
                     if res.data: new_id = res.data[0].get("id")
                 except Exception as e:
                     st.warning(f"تسجل فالسيت ولكن ما تسجلش ف Supabase: {e}")
-            st.session_state.en_attente.append({"vendeur": nom, "tel": tel, "ville": ville, "produit": produit, "prix": prix, "desc": desc, "image": photo, "preuve": preuve, "id_db": new_id})
+            st.session_state.en_attente.append({"vendeur": nom, "tel": tel, "ville": ville, "produit": produit, "prix": prix, "description": desc, "image": photo, "preuve": preuve, "id_db": new_id})
             st.success("تم استلام طلبك بنجاح سيتم نشر منتجك بعد التاكد من دفع مبلغ 40 درهم")
         else:
             st.error("يرجى ملء جميع الحقول!")
