@@ -82,7 +82,7 @@ with col2:
         st.rerun() 
         st.write("---")
     elif mot != "":
-    st.error("الكود غالط!")
+        st.error("الكود غالط!")
     st.stop()
 
 option1 = "اعرض منتجاتك -📦40 درهم"
