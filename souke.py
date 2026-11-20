@@ -71,7 +71,7 @@ if is_admin:
             col1, col2 = st.columns(2)
             with col1:
              if st.button(f"✅ نوافق و ننشر - {p.get('nom', '')}", key=f"ok_{p.get('id')}"):
-                        supabase.table("demandes").update({"statut": "accepte"}).eq("id", p.get("id")).execute()
+                        supabase.table("demandes").update({"statut": "accepte"}).eq("id", p.get("id_db")).execute()
                         st.success("تم القبول!")
                         st.rerun()
             
