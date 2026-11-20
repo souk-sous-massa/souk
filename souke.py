@@ -68,18 +68,18 @@ if is_admin:
             st.write(f"اسم البائع: {p['vendeur']} -الهاتف: {p['tel']} -المدينة: {p['ville']}")
             st.write(f"المنتوج: {p['produit']} - {p['prix']} درهم")
             st.write(p.get('description', ''))
-col1, col2 = st.columns(2)
-with col1:
-    if st.button(f"✅ نوافق و ننشر - {p.get('nom', '')}", key=f"ok_{p.get('id')}"):
-            supabase.table("demandes").update({"statut": "accepte"}).eq("id", p.get("id")).execute()
-            st.success("تم القبول!")
-            st.rerun()
-
-with col2:
-    if st.button(f"❌ نرفض - {p.get('nom', '')}", key=f"no_{p.get('id')}"):
-            supabase.table("demandes").update({"statut": "refuse"}).eq("id", p.get("id")).execute()
-            st.warning("تم الرفض و المسح!")
-            st.rerun() 
+            col1, col2 = st.columns(2)
+            with col1:
+             if st.button(f"✅ نوافق و ننشر - {p.get('nom', '')}", key=f"ok_{p.get('id')}"):
+                        supabase.table("demandes").update({"statut": "accepte"}).eq("id", p.get("id")).execute()
+                        st.success("تم القبول!")
+                        st.rerun()
+            
+            with col2:
+             if st.button(f"❌ نرفض - {p.get('nom', '')}", key=f"no_{p.get('id')}"):
+                        supabase.table("demandes").update({"statut": "refuse"}).eq("id", p.get("id")).execute()
+                        st.warning("تم الرفض و المسح!")
+                        st.rerun() 
             st.write("---")
     elif mot != "":
         st.error("الكود غالط!")
