@@ -75,22 +75,22 @@ if is_admin:
                 st.write(f"اسم البائع: {vendeur} - الهاتف: {tel} - المدينة: {ville}")
                 st.write(f"المنتج: {produit} - {prix} درهم")
                 st.write(p.get("description", ""))
-        col1, col2 = st.columns(2)
-        with col1:
-            nom_p = p.get("vendeur", "")
-            if st.button(f"توافق و نشر - {nom_p}", key=f"ok_{i}_{p.get('id')}"):
+                col1, col2 = st.columns(2)
+                with col1:
+                nom_p = p.get("vendeur", "")
+                if st.button(f"توافق و نشر - {nom_p}", key=f"ok_{i}_{p.get('id')}"):
                 supabase.table("demandes").update({"statut": "accepte"}).eq("vendeur", p.get("vendeur")).execute()
                 del st.session_state.en_attente[i]
                 st.success("تم القبول")
                 st.rerun()
-        with col2:
-            vendeur_p = p.get("vendeur", "")
-            if st.button(f"ترفض - {vendeur_p}", key=f"no_{i}_{p.get('id')}"):
+                with col2:
+                vendeur_p = p.get("vendeur", "")
+                if st.button(f"ترفض - {vendeur_p}", key=f"no_{i}_{p.get('id')}"):
                 supabase.table("demandes").update({"statut": "refuse"}).eq("vendeur", p.get("vendeur")).execute()
                 del st.session_state.en_attente[i]
                 st.warning("تم الرفض")
                 st.rerun()
-            st.write("---")
+                st.write("---")
     elif mot != "":
         st.error("الكود غالط!")
     st.stop()
