@@ -89,7 +89,7 @@ for i, p in enumerate(st.session_state.en_attente):
                 del st.session_state.en_attente[i]
                 st.warning("تم الرفض")
                 st.rerun()
-            st.write("---")
+            st.write("---")    
 else mot != "":
             st.error("الكود غالط!")
 st.stop()
