@@ -62,10 +62,10 @@ if is_admin:
     if mot == CODE_ADMIN:
         st.success("مرحبا مولات السوق!")
         st.write(f"عندك {len(st.session_state.en_attente)} طلبات في الانتظار")
-        for i, p in enumerate(st.session_state.en_attente):
+    for i, p in enumerate(st.session_state.en_attente):
             photo_b64 = p.get("photo") or p.get("image")
-            if photo_b64: st.image(base64.b64decode(photo_b64), width=250, caption="صورة المنتج")
-            if p.get("preuve") is not None:
+        if photo_b64: st.image(base64.b64decode(photo_b64), width=250, caption="صورة المنتج")
+        if p.get("preuve") is not None:
                 st.image(p["preuve"], width=250, caption="الايصال")
                 vendeur = p.get("vendeur")
                 tel = p.get("tel")
@@ -76,16 +76,16 @@ if is_admin:
                 st.write(f"المنتج: {produit} - {prix} درهم")
                 st.write(p.get("description", ""))
                 col1, col2 = st.columns(2)
-                with col1:
+            with col1:
                 nom_p = p.get("vendeur", "")
-                if st.button(f"توافق و نشر - {nom_p}", key=f"ok_{i}_{p.get('id')}"):
+            if st.button(f"توافق و نشر - {nom_p}", key=f"ok_{i}_{p.get('id')}"):
                 supabase.table("demandes").update({"statut": "accepte"}).eq("vendeur", p.get("vendeur")).execute()
                 del st.session_state.en_attente[i]
                 st.success("تم القبول")
                 st.rerun()
-                with col2:
+            with col2:
                 vendeur_p = p.get("vendeur", "")
-                if st.button(f"ترفض - {vendeur_p}", key=f"no_{i}_{p.get('id')}"):
+            if st.button(f"ترفض - {vendeur_p}", key=f"no_{i}_{p.get('id')}"):
                 supabase.table("demandes").update({"statut": "refuse"}).eq("vendeur", p.get("vendeur")).execute()
                 del st.session_state.en_attente[i]
                 st.warning("تم الرفض")
