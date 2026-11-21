@@ -118,6 +118,9 @@ else:
     if preuve:
         st.image(preuve, width=200)
     if st.button("ارسال الطلب"):
+mport base64
+def to_b64(f):
+    return "data:image/jpeg;base64," + base64.b64encode(f.getvalue()).decode() if f else None
         if nom and tel and produit and photo and preuve:
             new_id = None
             if supabase is not None:
@@ -125,6 +128,7 @@ else:
                     res = supabase.table("demandes").insert({
                         "vendeur": nom, "tel": tel, "ville": ville,
                         "produit": produit, "prix": prix, "description": description,
+                        "image": to_b64(photo), "preuve": to_b64(preuve),
                         "statut": "en_attente"
                     }).execute()
                     if res.data: new_id = res.data[0].get("id")
