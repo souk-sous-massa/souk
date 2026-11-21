@@ -59,7 +59,7 @@ is_admin = params.get("admin") == "1"
 if is_admin:
     st.title("🔒 لوحة الإدارة")
     mot = st.text_input("دخلي الكود السري", type="password")
-    if mot == CODE_ADMIN:
+if mot == CODE_ADMIN:
         st.success("مرحبا مولات السوق!")
         st.write(f"عندك {len(st.session_state.en_attente)} طلبات في الانتظار")
     for i, p in enumerate(st.session_state.en_attente):
@@ -90,7 +90,7 @@ if is_admin:
                 st.warning("تم الرفض")
                 st.rerun()
             st.write("---")
-        else mot != "":
+else mot != "":
             st.error("الكود غالط!")
 st.stop()
 option1 = "اعرض منتجاتك -📦40 درهم"
