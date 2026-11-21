@@ -89,7 +89,7 @@ if is_admin:
                 del st.session_state.en_attente[i]
                 st.warning("تم الرفض")
                 st.rerun()
-                st.write("---")
+            st.write("---")
     elif mot != "":
         st.error("الكود غالط!")
     st.stop()
