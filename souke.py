@@ -69,9 +69,14 @@ if is_admin:
                     st.image(base64.b64decode(photo_b64), width=250, caption="صورة المنتج")
             if p.get("preuve") is not None:
                     st.image(p["preuve"], width=250, caption="ايصال الدفع - المبلغ الاجمالي = 40درهم")
-                    st.write(f"اسم البائع: {p['vendeur']} -الهاتف: {p['tel']} -المدينة: {p['ville']}")
-                    st.write(f"المنتوج: {p['produit']} - {p['prix']} درهم")
-                    st.write(p.get('description', ''))
+                    vendeur = p.get("vendeur")
+                    tel = p.get("tel")
+                    ville = p.get("ville")
+                    produit = p.get("produit")
+                    prix = p.get("prix")
+                    st.write(f"اسم البائع: {vendeur} - الهاتف: {tel} - المدينة: {ville}")
+                    st.write(f"المنتج: {produit} - {prix} درهم")
+                    st.write(p.get('description', 
             col1, col2 = st.columns(2)
             with col1:
                     nom_p = p.get('nom', '')
