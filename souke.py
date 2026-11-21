@@ -90,7 +90,7 @@ if is_admin:
                 st.warning("تم الرفض")
                 st.rerun()
             st.write("---")
-else mot != "":
+    else mot != "":
             st.error("الكود غالط!")
 st.stop()
 option1 = "اعرض منتجاتك -📦40 درهم"
