@@ -65,7 +65,7 @@ if is_admin:
         for i, p in enumerate(st.session_state.en_attente):
             photo_b64 = p.get("photo") or p.get("image")
             if photo_b64:
-            import base64
+                import base64
             st.image(base64.b64decode(photo_b64), width=250, caption="صورة المنتج")
         if p.get("preuve") is not None:
             st.image(p["preuve"], width=250, caption="الايصال")
