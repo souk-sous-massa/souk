@@ -62,7 +62,7 @@ if is_admin:
 if mot == CODE_ADMIN:
         st.success("مرحبا مولات السوق!")
         st.write(f"عندك {len(st.session_state.en_attente)} طلبات في الانتظار")
-    for i, p in enumerate(st.session_state.en_attente):
+for i, p in enumerate(st.session_state.en_attente):
             photo_b64 = p.get("photo") or p.get("image")
             if p.get("preuve") is not None:
                 st.image(p["preuve"], width=250, caption="الايصال")
