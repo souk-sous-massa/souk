@@ -117,7 +117,7 @@ else:
         st.image(photo, width=200)
     if preuve:
         st.image(preuve, width=200)
-def to_b64(f):
+    def to_b64(f):
     return "data:image/jpeg;base64," + base64.b64encode(f.getvalue()).decode() if f else None
     if st.button("ارسال الطلب"):
         if nom and tel and produit and photo and preuve:
