@@ -72,13 +72,13 @@ if is_admin:
             st.write(p.get('description', ''))
             col1, col2 = st.columns(2)
             with col1:
-             if st.button(f"✅ نوافق و ننشر - {p.get('nom', '')}", key=f"ok_{p.get('id')}"):
+             if st.button(f"✅ نوافق و ننشر - {p.get('nom', '')}", key=f"ok_{i}_{p.get('id')}":
                         supabase.table("demandes").update({"statut": "accepte"}).eq("vendeur", p.get("vendeur")).execute()
                         st.success("تم القبول!")
                         st.rerun()
             
             with col2:
-             if st.button(f"❌ نرفض - {p.get('vendeur', '')}", key=f"no_{p.get('id')}"):
+             if st.button(f"❌ نرفض - {p.get('vendeur', '')}", key=f"no_{i}_{p.get('id')}":
                         supabase.table("demandes").update({"statut": "refuse"}).eq("vendeur", p.get("vendeur")).execute()
                         st.warning("تم الرفض و المسح!")
                         st.rerun() 
