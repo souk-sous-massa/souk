@@ -1,8 +1,8 @@
 import streamlit as st
 import base64
-if "en_attente" not in st.session_state:
-    st.session_state.en_attente = []
 from supabase import create_client
+if "en_attente" not in st.session_state:
+    st.session_state.en_attente =[ ]
 st.set_page_config(page_title="سوق سوس ماسة", page_icon="🛍️")
 st.title("🛍️ سوق سوس ماسة")
 
