@@ -63,18 +63,21 @@ if is_admin:
         st.success("مرحبا مولات السوق!")
         st.write(f"عندك {len(st.session_state.en_attente)} طلبات في الانتظار")
         for i, p in enumerate(st.session_state.en_attente):
-            if p.get("image") is not None:
-                st.image(p["image"], width=250, caption="صورة المنتوج")
+                photo_b64 = p.get("photo") or p.get("image")
+                if photo_b64:
+                    import base64
+                    st.image(base64.b64decode(photo_b64), width=250, caption="صورة المنتج")
             if p.get("preuve") is not None:
-                st.image(p["preuve"], width=250, caption="ايصال الدفع - المبلغ الاجمالي = 40درهم")
-            st.write(f"اسم البائع: {p['vendeur']} -الهاتف: {p['tel']} -المدينة: {p['ville']}")
-            st.write(f"المنتوج: {p['produit']} - {p['prix']} درهم")
-            st.write(p.get('description', ''))
+                    st.image(p["preuve"], width=250, caption="ايصال الدفع - المبلغ الاجمالي = 40درهم")
+                    st.write(f"اسم البائع: {p['vendeur']} -الهاتف: {p['tel']} -المدينة: {p['ville']}")
+                    st.write(f"المنتوج: {p['produit']} - {p['prix']} درهم")
+                    st.write(p.get('description', ''))
             col1, col2 = st.columns(2)
             with col1:
                     nom_p = p.get('nom', '')
                     if st.button(f"✅ توافق و نشر - {nom_p}", key=f"ok_{i}_{p.get('id')}"):
                         supabase.table("demandes").update({"statut": "accepte"}).eq("vendeur", p.get("vendeur")).execute()
+                        del st.session_state.en_attente[i]
                         st.success("تم القبول!")
                         st.rerun()
             
@@ -82,6 +85,7 @@ if is_admin:
                     vendeur_p = p.get('vendeur', '')
                     if st.button(f"❌ ترفض - {vendeur_p}", key=f"no_{i}_{p.get('id')}"):
                         supabase.table("demandes").update({"statut": "refuse"}).eq("vendeur", p.get("vendeur")).execute()
+                        del st.session_state.en_attente[i]
                         st.warning("تم الرفض و المسح!")
                         st.rerun() 
             st.write("---")
