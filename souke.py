@@ -135,7 +135,6 @@ else:
                     if res.data: new_id = res.data[0].get("id")
                 except Exception as e:
                     st.warning(f"تسجل فالسيت ولكن ما تسجلش ف Supabase: {e}")
-            st.session_state.en_attente.append({"vendeur": nom, "tel": tel, "ville": ville, "produit": produit, "prix": prix, "description": description, "image": t0_b64(photo), "preuve":to_b64(preuve), "id_db": new_id})
             st.success("تم استلام طلبك بنجاح سيتم نشر منتجك بعد التاكد من دفع مبلغ 40 درهم")
         else:
             st.error("يرجى ملء جميع الحقول!")
