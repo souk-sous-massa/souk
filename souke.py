@@ -92,8 +92,7 @@ if is_admin:
             st.write("---")
 elif mot != "":
             st.error("الكود غالط!")
-        st.stop()
-
+            st.stop()
 option1 = "اعرض منتجاتك -📦40 درهم"
 option2 = "🛍️ السوق"
 choix = st.sidebar.radio("القائمة الرئيسية", [option1, option2])
