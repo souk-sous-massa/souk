@@ -79,7 +79,8 @@ if is_admin:
                         st.rerun()
             
             with col2:
-             if st.button(f"❌ نرفض - {p.get('vendeur', '')}", key=f"no_{i}_{p.get('id')}":
+                    vendeur_p = p.get('vendeur', '')
+                    if st.button(f"❌ ترفض - {vendeur_p}", key=f"no_{i}_{p.get('id')}"):
                         supabase.table("demandes").update({"statut": "refuse"}).eq("vendeur", p.get("vendeur")).execute()
                         st.warning("تم الرفض و المسح!")
                         st.rerun() 
